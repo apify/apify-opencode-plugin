@@ -5,20 +5,21 @@ import path, { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const current_dir = dirname(fileURLToPath(import.meta.url));
+const root_dir = path.join(current_dir, "..");
 
 export const ApifyPlugin: Plugin = async () => {
-  const agentPath = path.join(current_dir, "agents/apify.md")
+  const agentPath = path.join(root_dir, "agents/apify.md")
   if (!existsSync(agentPath)) {
     throw new Error('Apify agent.md not found')
   }
   const agent = readFileSync(agentPath, "utf8")
 
-  const skillsPath = path.join(current_dir, "skills")
+  const skillsPath = path.join(root_dir, "skills")
   if (!existsSync(skillsPath)) {
     throw new Error('Apify skills not found')
   }
 
-  const instructionsPath = path.join(current_dir, "instructions/apify-routing.md")
+  const instructionsPath = path.join(root_dir, "instructions/apify-routing.md")
   if (!existsSync(instructionsPath)) {
     throw new Error('Apify instructions not found')
   }
