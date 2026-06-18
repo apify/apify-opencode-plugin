@@ -23,6 +23,12 @@ jobs:
 
       - run: npm install
 
+      - name: Verify plugin assets exist
+        run: |
+          test -f agents/apify.md
+          test -f instructions/apify-routing.md
+          test -d skills
+
       - run: npm run check
       - run: npm run build
 
