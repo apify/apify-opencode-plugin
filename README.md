@@ -68,7 +68,7 @@ Add the plugin entry to your project's `opencode.json`:
 ```json
 {
   "$schema": "https://opencode.ai/config.json",
-  "plugin": ["apify-open-code-plugin"]
+  "plugin": ["opencode-apify"]
 }
 ```
 
