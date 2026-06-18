@@ -80,7 +80,7 @@ opencode plugin opencode-apify
 
 This will add the entry to `opencode.json` automatically.
 
-> **Local development:** you can also pass a file path instead of the package name for local testing, e.g. `"plugin": ["./path/to/apify-open-code-plugin"]`.
+> **Local development:** you can also pass a file path instead of the package name for local testing, e.g. `"plugin": ["./path/to/opencode-apify"]`.
 
 ### 2. Check available MCPs
 
