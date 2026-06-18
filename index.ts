@@ -35,6 +35,9 @@ export const ApifyPlugin: Plugin = async () => {
         apify: {
           prompt: agent,
           mode: "all",
+          tools: {
+            "apify_*": true,
+          },
           description: "Anything related to Apify, use the apify_* tools to interact with the Apify platform.",
         },
       }
