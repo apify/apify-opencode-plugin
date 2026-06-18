@@ -32,7 +32,8 @@
     "name": "Apify Technologies s.r.o."
   },
   "scripts": {
-    "check": "tsc --noEmit"
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit"
   },
   "devDependencies": {
     "@opencode-ai/plugin": "^1.0.0",
