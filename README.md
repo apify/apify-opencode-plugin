@@ -161,7 +161,7 @@ Route 1 uses the MCP server, Route 2 relies on the local `apify` CLI, and Route 
 - Apify Store — [apify.com/store](https://apify.com/store)
 - Docs (LLM-friendly) — [docs.apify.com/llms.txt](https://docs.apify.com/llms.txt)
 - Docs (full) — [docs.apify.com/llms-full.txt](https://docs.apify.com/llms-full.txt)
-- Source repo — [github.com/apify/apify-open-code-plugin](https://github.com/apify/apify-open-code-plugin)
+- Source repo — [github.com/apify/apify-opencode-plugin](https://github.com/apify/apify-opencode-plugin)
 - Issues / feedback — open an issue on the source repo, or email [support@apify.com](mailto:support@apify.com)
 
 ## License
