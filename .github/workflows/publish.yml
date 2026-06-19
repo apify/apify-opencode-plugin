@@ -1,27 +1,39 @@
-name: Publish to NPM
+name: Release & Publish Apify OpenCode Plugin
 
 on:
   release:
     types: [published]
 
+permissions:
+  id-token: write
+  contents: write
+
 jobs:
-  publish:
+  build_and_release:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
+
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          node-version: 22
-          registry-url: https://registry.npmjs.org
+          token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+          fetch-depth: 0
 
-      - name: Set version from release tag
-        run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+      - name: Set up Node.js & cache npm
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run check
+
+      - name: Build project
+        run: npm run build
 
       - name: Verify plugin assets exist
         run: |
@@ -29,9 +41,31 @@ jobs:
           test -f instructions/apify-routing.md
           test -d skills
 
-      - run: npm run check
-      - run: npm run build
+      - name: Extract release version
+        id: get_version
+        run: |
+          FULL_TAG_NAME="${{ github.event.release.tag_name }}"
+          VERSION_NUMBER="${FULL_TAG_NAME#v}"
+          echo "VERSION=${VERSION_NUMBER}" >> $GITHUB_ENV
 
-      - run: npm publish --provenance --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Update package.json version
+        run: |
+          echo "Updating package.json to version ${{ env.VERSION }}"
+          npm version ${{ env.VERSION }} --no-git-tag-version
+
+      - name: Commit version update
+        uses: apify/actions/signed-commit@v1.1.2
+        with:
+          message: "chore(release): set version to ${{ env.VERSION }} [skip ci]"
+          add: 'package.json'
+          github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+          branch: ${{ github.event.release.target_commitish }}
+
+      - name: Publish to npm
+        run: |
+          if npm view opencode-apify@${{ env.VERSION }} version > /dev/null 2>&1; then
+            echo "Version ${{ env.VERSION }} of opencode-apify is already published to npm. Skipping publish step."
+          else
+            echo "Publishing opencode-apify@${{ env.VERSION }} to npm..."
+            npm publish --provenance --access public
+          fi
