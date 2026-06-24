@@ -27,7 +27,7 @@ The plugin uses **three setup paths** depending on what you're doing. The `apify
 
 ### Path 1 — Using existing Actors through MCP
 
-Uses **OAuth**. The first time the agent calls a tool that needs auth (for example `run-actor` or `get-dataset-items`), Open Code opens `console.apify.com` in your browser and asks you to sign in. Read-only tools such as `search-actors`, `fetch-actor-details`, `search-apify-docs`, and `fetch-apify-docs` work without auth.
+Uses **OAuth**. The first time the agent calls a tool that needs auth (for example `call-actor` or `get-dataset-items`), Open Code opens `console.apify.com` in your browser and asks you to sign in. Read-only tools such as `search-actors`, `fetch-actor-details`, `search-apify-docs`, and `fetch-apify-docs` work without auth.
 
 ### Path 2 — CLI workflows for Actor development, actorization, or scraper runs
 
