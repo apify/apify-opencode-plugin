@@ -1,0 +1,43 @@
+{
+  "name": "opencode-apify",
+  "version": "1.0.0",
+  "description": "Apify plugin for OpenCode - web scraping, automation, and data extraction via the Apify platform",
+  "type": "module",
+  "main": "./dist/index.js",
+  "files": [
+    "dist",
+    "agents",
+    "instructions",
+    "skills"
+  ],
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "apify",
+    "web-scraping",
+    "automation",
+    "data-extraction",
+    "actors",
+    "llm",
+    "ai"
+  ],
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apify/apify-opencode-plugin"
+  },
+  "homepage": "https://apify.com",
+  "author": {
+    "name": "Apify Technologies s.r.o."
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "check": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@opencode-ai/plugin": "^1.0.0",
+    "@opencode-ai/sdk": "^1.17.4",
+    "@types/node": "^25.2.2",
+    "typescript": "^5.0.0"
+  }
+}

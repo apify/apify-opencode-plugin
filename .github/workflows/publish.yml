@@ -1,0 +1,71 @@
+name: Release & Publish Apify OpenCode Plugin
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  build_and_release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Set up Node.js & cache npm
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.x'
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Type check
+        run: npm run check
+
+      - name: Build project
+        run: npm run build
+
+      - name: Verify plugin assets exist
+        run: |
+          test -f agents/apify.md
+          test -f instructions/apify-routing.md
+          test -d skills
+
+      - name: Extract release version
+        id: get_version
+        run: |
+          FULL_TAG_NAME="${{ github.event.release.tag_name }}"
+          VERSION_NUMBER="${FULL_TAG_NAME#v}"
+          echo "VERSION=${VERSION_NUMBER}" >> $GITHUB_ENV
+
+      - name: Update package.json version
+        run: |
+          echo "Updating package.json to version ${{ env.VERSION }}"
+          npm version ${{ env.VERSION }} --no-git-tag-version
+
+      - name: Commit version update
+        uses: apify/actions/signed-commit@v1.1.2
+        with:
+          message: "chore(release): set version to ${{ env.VERSION }} [skip ci]"
+          add: 'package.json'
+          github-token: ${{ secrets.APIFY_SERVICE_ACCOUNT_GITHUB_TOKEN }}
+          branch: ${{ github.event.release.target_commitish }}
+
+      - name: Publish to npm
+        run: |
+          if npm view opencode-apify@${{ env.VERSION }} version > /dev/null 2>&1; then
+            echo "Version ${{ env.VERSION }} of opencode-apify is already published to npm. Skipping publish step."
+          else
+            echo "Publishing opencode-apify@${{ env.VERSION }} to npm..."
+            npm publish --provenance --access public
+          fi
