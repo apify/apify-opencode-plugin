@@ -71,11 +71,15 @@
 
 | Actor | Tier | Best for |
 |-------|------|----------|
+| xquik/x-tweet-scraper | community | tweet lookup, search, timelines, threads, and engagement |
+| xquik/x-follower-scraper | community | followers, following, lists, and communities |
 | apidojo/tweet-scraper | community | tweet search |
 | apidojo/twitter-scraper-lite | community | comprehensive, no limits |
 | apidojo/twitter-user-scraper | community | user profiles |
 | apidojo/twitter-profile-scraper | community | profiles + recent tweets |
 | apidojo/twitter-list-scraper | community | tweets from lists |
+
+Xquik is an independent third-party service. Not affiliated with X Corp. "Twitter" and "X" are trademarks of X Corp.
 
 ## LinkedIn
 
