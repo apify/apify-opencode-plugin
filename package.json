@@ -24,7 +24,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/apify/apify-opencode-plugin"
+    "url": "git+https://github.com/apify/apify-opencode-plugin.git"
   },
   "homepage": "https://apify.com",
   "author": {
