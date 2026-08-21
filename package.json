@@ -1,7 +1,7 @@
 {
   "name": "opencode-apify",
   "version": "1.0.0",
-  "description": "Apify plugin for OpenCode - web scraping, automation, and data extraction via the Apify platform",
+  "description": "Apify plugin for OpenCode: the largest marketplace of tools for AI, run as native OpenCode skills and an MCP server.",
   "type": "module",
   "main": "./dist/index.js",
   "files": [
