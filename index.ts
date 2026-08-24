@@ -29,7 +29,7 @@ export const ApifyPlugin: Plugin = async () => {
       // ConfigV2 includes `skills` which isn't in the plugin's Config type yet
       const cfg = config as typeof config & Pick<ConfigV2, "skills">
 
-      cfg.mcp = { ...cfg.mcp, apify: { type: "remote", enabled: true, url: "https://mcp.apify.com" } }
+      cfg.mcp = { ...cfg.mcp, apify: { type: "remote", enabled: true, url: "https://mcp.apify.com/?client=opencode" } }
       cfg.agent = {
         ...cfg.agent,
         apify: {
