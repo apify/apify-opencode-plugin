@@ -7,7 +7,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 ## [1.0.1]
 
 ### Changed
-- Updated Apify MCP server to include `?client=opencode` for client identification.
+- Updated Apify MCP server to include `?client=opencode+plugin` for client identification.
 
 ## [1.0.0] — Initial Open Code release
 
