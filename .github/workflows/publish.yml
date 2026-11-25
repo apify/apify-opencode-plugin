@@ -70,15 +70,17 @@ jobs:
 
       - name: Extract release version
         id: get_version
+        env:
+          TAG: ${{ inputs.tag }}
         run: |
-          FULL_TAG_NAME="${{ inputs.tag }}"
+          FULL_TAG_NAME="$TAG"
           VERSION_NUMBER="${FULL_TAG_NAME#v}"
           echo "VERSION=${VERSION_NUMBER}" >> $GITHUB_ENV
 
       - name: Update package.json version
         run: |
-          echo "Updating package.json to version ${{ env.VERSION }}"
-          npm version ${{ env.VERSION }} --no-git-tag-version
+          echo "Updating package.json to version $VERSION"
+          npm version "$VERSION" --no-git-tag-version
 
       - name: Commit version update
         uses: apify/actions/signed-commit@v1.1.2
@@ -90,9 +92,9 @@ jobs:
 
       - name: Publish to npm
         run: |
-          if npm view opencode-apify@${{ env.VERSION }} version > /dev/null 2>&1; then
-            echo "Version ${{ env.VERSION }} of opencode-apify is already published to npm. Skipping publish step."
+          if npm view opencode-apify@"$VERSION" version > /dev/null 2>&1; then
+            echo "Version $VERSION of opencode-apify is already published to npm. Skipping publish step."
           else
-            echo "Publishing opencode-apify@${{ env.VERSION }} to npm..."
+            echo "Publishing opencode-apify@$VERSION to npm..."
             npm publish --provenance --access public
           fi
